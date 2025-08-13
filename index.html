@@ -33,47 +33,29 @@
                   var(--bg);
       overflow:hidden;
     }
-    .app{
-      position:fixed; inset:0; display:grid; grid-template-columns: 1fr 380px; gap:18px; padding:18px;
-    }
+    .app{ position:fixed; inset:0; display:grid; grid-template-columns: 1fr 380px; gap:18px; padding:18px; }
     .stage{
       position:relative; border-radius: var(--radius); box-shadow: var(--shadow);
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      overflow:hidden;
+      overflow:hidden; min-height: 620px; /* ✅ ensure non-zero height on GitHub Pages */
     }
-    #globe-container{ position:absolute; inset:0; }
+    #globe-container{ position:absolute; inset:0; width:100%; height:100%; }
 
-    .panel{
-      display:flex; flex-direction:column; gap:14px; background: var(--bg-2);
-      border-radius: var(--radius); padding:16px; box-shadow: var(--shadow);
-      min-height:0;
-    }
+    .panel{ display:flex; flex-direction:column; gap:14px; background: var(--bg-2); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow); min-height:0; }
     .brand{display:flex; align-items:center; gap:10px}
     .brand img{height:28px; width:auto; filter:drop-shadow(0 4px 12px rgba(0,0,0,.35));}
     .brand h1{font-size:18px; font-weight:700; letter-spacing:.2px; margin:0}
     .muted{color:var(--muted)}
 
     .searchbar{display:flex; gap:8px}
-    .searchbar input{
-      flex:1; padding:12px 14px; border-radius:14px; border:none; outline:none;
-      background:#0c1330; color:var(--ink); font-size:14px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-    }
-    .searchbar button{
-      padding:12px 14px; border-radius:14px; border:none; cursor:pointer; font-weight:600; color:#0b1020;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: var(--shadow);
-    }
+    .searchbar input{ flex:1; padding:12px 14px; border-radius:14px; border:none; outline:none; background:#0c1330; color:var(--ink); font-size:14px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+    .searchbar button{ padding:12px 14px; border-radius:14px; border:none; cursor:pointer; font-weight:600; color:#0b1020; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); }
 
     .legend{display:flex; gap:8px; align-items:center; font-size:12px; color:var(--muted)}
     .legend .dot{width:10px; height:10px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 2px rgba(34,211,238,.15)}
 
     .list{overflow:auto; min-height:0; padding-right:6px}
-    .fellow-card{
-      display:grid; grid-template-columns: 52px 1fr auto; gap:12px; align-items:center;
-      padding:10px; border-radius:14px; background:#0b1233; margin-bottom:8px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-    }
+    .fellow-card{ display:grid; grid-template-columns: 52px 1fr auto; gap:12px; align-items:center; padding:10px; border-radius:14px; background:#0b1233; margin-bottom:8px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
     .fellow-card:hover{ outline:1px solid rgba(139,92,246,.35); cursor:pointer; background:#0c163d; }
     .avatar{width:52px; height:52px; border-radius:12px; object-fit:cover; background:#0a0f24}
     .title{font-size:14px; font-weight:700; margin:0}
@@ -83,11 +65,7 @@
     /* Modal */
     .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(5px);} 
     .modal.open{display:flex}
-    .sheet{
-      width:min(880px, 92vw); background: linear-gradient(180deg, #0a0f24, #0b1020);
-      border-radius: 24px; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.08); overflow:hidden;
-      display:grid; grid-template-columns: 320px 1fr; position:relative;
-    }
+    .sheet{ width:min(880px, 92vw); background: linear-gradient(180deg, #0a0f24, #0b1020); border-radius: 24px; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.08); overflow:hidden; display:grid; grid-template-columns: 320px 1fr; position:relative; }
     .sheet .left{background: radial-gradient(900px 600px at 20% -20%, rgba(139,92,246,.25) 0%, transparent 60%); padding:22px;}
     .sheet .right{padding:22px}
     .sheet .portrait{width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:18px; background:#0c1330}
@@ -102,16 +80,13 @@
     .impact .card{background:#0c1330; border-radius:14px; padding:12px; border:1px solid rgba(255,255,255,.06)}
     .impact .num{font-size:22px; font-weight:800}
 
-    .close{
-      position:absolute; right:12px; top:10px; background:transparent; border:none; color:var(--muted); font-size:24px; cursor:pointer
-    }
+    .close{ position:absolute; right:12px; top:10px; background:transparent; border:none; color:var(--muted); font-size:24px; cursor:pointer }
+
+    /* Error banner */
+    #err{ position:fixed; left:50%; transform:translateX(-50%); bottom:16px; background:#3b0c0c; color:#fecaca; border:1px solid #fecaca55; padding:10px 12px; border-radius:12px; font-size:12px; display:none; z-index:50 }
 
     /* Responsive */
-    @media (max-width: 980px){
-      .app{grid-template-columns:1fr; padding:12px}
-      .panel{order:-1}
-      .sheet{grid-template-columns: 1fr}
-    }
+    @media (max-width: 980px){ .app{grid-template-columns:1fr; padding:12px} .panel{order:-1} .sheet{grid-template-columns: 1fr} }
   </style>
 </head>
 <body>
@@ -122,7 +97,6 @@
 
     <aside class="panel" aria-label="Project directory">
       <div class="brand">
-        <!-- Swap this image src with your hosted logo path -->
         <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/globe.svg" alt="Thinkering logo" />
         <div>
           <h1>Thinkering Fellows Globe</h1>
@@ -136,12 +110,10 @@
       </div>
 
       <div class="legend"><span class="dot"></span> Click a marker to open the fellow profile</div>
-
       <div id="list" class="list" tabindex="0" aria-live="polite"></div>
     </aside>
   </div>
 
-  <!-- Modal for fellow details -->
   <div id="modal" class="modal" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
     <div class="sheet">
       <button class="close" id="closeModal" aria-label="Close">×</button>
@@ -160,140 +132,66 @@
     </div>
   </div>
 
-  <!-- ✅ Classic (non-module) scripts so sandboxed environments don't block ESM imports -->
+  <div id="err"></div>
+
+  <!-- Classic (non-module) scripts so sandboxed/GitHub Pages environments don't block ESM imports -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://unpkg.com/three-globe@2.30.0/dist/three-globe.min.js"></script>
 
   <script>
-  /*********************************
-   * 1) DATA — edit to your needs  *
-   *********************************/
+  const ERR = (msg) => { const el = document.getElementById('err'); el.textContent = msg; el.style.display='block'; console.error(msg); };
+  // WebGL sanity check
+  try { const canvas = document.createElement('canvas'); const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl'); if(!gl){ throw new Error('WebGL is not available in this browser.'); } } catch(e){ ERR('WebGL unavailable: ' + e.message); }
+
+  // 1) DATA (example rows)
   const FELLOWS = [
-    {
-      id: 'tc-001',
-      name: 'Amina Diallo',
-      city: 'Dakar', country: 'Senegal', lat: 14.7167, lng: -17.4677,
-      photoUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
-      projectTitle: 'Solar-Powered Learning Hubs',
-      projectDescription: 'Deploying micro-solar kits and tablets to support after-school STEM labs in peri-urban neighborhoods.',
-      tags: ['STEM', 'K-12', 'Energy'],
-      fundraising: [
-        { label: 'Donate', url: 'https://example.org/donate/amina' },
-        { label: 'Project Site', url: 'https://example.org/projects/solar-hubs' }
-      ],
-      impact: { beneficiaries: 480, sdg: ['7', '4'], milestones: ['3 hubs live', 'Teacher training complete', 'First evaluation Q4'] }
-    },
-    {
-      id: 'tc-002',
-      name: 'Miguel Santos',
-      city: 'Medellín', country: 'Colombia', lat: 6.2308, lng: -75.5906,
-      photoUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=600&auto=format&fit=crop',
-      projectTitle: 'Community Robotics League',
-      projectDescription: 'Open robotics league connecting public schools with local makerspaces; culminating in citywide showcase.',
-      tags: ['Robotics', 'Maker Ed'],
-      fundraising: [
-        { label: 'Givebutter', url: 'https://example.org/give/miguel' },
-        { label: 'GitHub', url: 'https://github.com/example/robotics-league' }
-      ],
-      impact: { beneficiaries: 320, sdg: ['4', '9'], milestones: ['10 teams formed', 'Parts kits distributed'] }
-    },
-    {
-      id: 'tc-003',
-      name: 'Priya Natarajan',
-      city: 'Chennai', country: 'India', lat: 13.0827, lng: 80.2707,
-      photoUrl: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=600&auto=format&fit=crop',
-      projectTitle: 'Girls Code Coastal',
-      projectDescription: 'Coastal resilience + coding curriculum where students build IoT tide monitors and dashboards.',
-      tags: ['Coding', 'Climate'],
-      fundraising: [
-        { label: 'Fundraising', url: 'https://example.org/fund/priya' }
-      ],
-      impact: { beneficiaries: 210, sdg: ['5', '13'], milestones: ['Pilot cohort complete'] }
-    },
-    {
-      id: 'tc-004',
-      name: 'Jordan Lee',
-      city: 'Oakland', country: 'USA', lat: 37.8044, lng: -122.2711,
-      photoUrl: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=600&auto=format&fit=crop',
-      projectTitle: 'Neighborhood FabLab on Wheels',
-      projectDescription: 'A mobile fabrication lab delivering design challenges to schoolyards and community centers.',
-      tags: ['Design', 'FabLab', 'Mobile'],
-      fundraising: [
-        { label: 'Donate', url: 'https://example.org/donate/jordan' }
-      ],
-      impact: { beneficiaries: 650, sdg: ['4', '10'], milestones: ['Truck retrofit done', 'Summer tour planned'] }
-    }
+    { id:'tc-001', name:'Amina Diallo', city:'Dakar', country:'Senegal', lat:14.7167, lng:-17.4677, photoUrl:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop', projectTitle:'Solar-Powered Learning Hubs', projectDescription:'Deploying micro-solar kits and tablets to support after-school STEM labs in peri-urban neighborhoods.', tags:['STEM','K-12','Energy'], fundraising:[{label:'Donate', url:'https://example.org/donate/amina'},{label:'Project Site', url:'https://example.org/projects/solar-hubs'}], impact:{beneficiaries:480, sdg:['7','4'], milestones:['3 hubs live','Teacher training complete','First evaluation Q4']} },
+    { id:'tc-002', name:'Miguel Santos', city:'Medellín', country:'Colombia', lat:6.2308, lng:-75.5906, photoUrl:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=600&auto=format&fit=crop', projectTitle:'Community Robotics League', projectDescription:'Open robotics league connecting public schools with local makerspaces; culminating in citywide showcase.', tags:['Robotics','Maker Ed'], fundraising:[{label:'Givebutter', url:'https://example.org/give/miguel'},{label:'GitHub', url:'https://github.com/example/robotics-league'}], impact:{beneficiaries:320, sdg:['4','9'], milestones:['10 teams formed','Parts kits distributed']} },
+    { id:'tc-003', name:'Priya Natarajan', city:'Chennai', country:'India', lat:13.0827, lng:80.2707, photoUrl:'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=600&auto=format&fit=crop', projectTitle:'Girls Code Coastal', projectDescription:'Coastal resilience + coding curriculum where students build IoT tide monitors and dashboards.', tags:['Coding','Climate'], fundraising:[{label:'Fundraising', url:'https://example.org/fund/priya'}], impact:{beneficiaries:210, sdg:['5','13'], milestones:['Pilot cohort complete']} },
+    { id:'tc-004', name:'Jordan Lee', city:'Oakland', country:'USA', lat:37.8044, lng:-122.2711, photoUrl:'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=600&auto=format&fit=crop', projectTitle:'Neighborhood FabLab on Wheels', projectDescription:'A mobile fabrication lab delivering design challenges to schoolyards and community centers.', tags:['Design','FabLab','Mobile'], fundraising:[{label:'Donate', url:'https://example.org/donate/jordan'}], impact:{beneficiaries:650, sdg:['4','10'], milestones:['Truck retrofit done','Summer tour planned']} }
   ];
 
-  /********************************************
-   * 2) GLOBE — create, style, and add markers *
-   ********************************************/
+  // 2) GLOBE
   const container = document.getElementById('globe-container');
   const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  const rect0 = container.getBoundingClientRect();
-  const initW = rect0.width || container.parentElement.clientWidth || window.innerWidth;
-  const initH = rect0.height || container.parentElement.clientHeight || window.innerHeight;
-  renderer.setSize(initW, initH);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+  function sizeFrom(el){ const r = el.getBoundingClientRect(); return { w: Math.max(1, r.width || el.clientWidth || window.innerWidth), h: Math.max(1, r.height || el.clientHeight || (window.innerHeight - 120)) }; }
+  const s0 = sizeFrom(container);
+  renderer.setSize(s0.w, s0.h);
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, initW/initH, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(50, s0.w/s0.h, 0.1, 2000);
   camera.position.set(0, 0, 420);
 
-  // ✅ OrbitControls (global) — ensure "new"
-  console.assert(THREE.OrbitControls, 'OrbitControls script missing — check the CDN path.');
+  if(!THREE.OrbitControls){ ERR('OrbitControls not loaded (CDN blocked?)'); }
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.enablePan = false;
-  controls.minDistance = 180;
-  controls.maxDistance = 650;
+  controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 180; controls.maxDistance = 650;
 
-  // Lighting
   scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-  dirLight.position.set(-60, 80, 80);
-  scene.add(dirLight);
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.9); dirLight.position.set(-60, 80, 80); scene.add(dirLight);
 
-  // Globe
-  console.assert(typeof ThreeGlobe === 'function', 'ThreeGlobe global missing — check the CDN path.');
+  if(typeof ThreeGlobe !== 'function'){ ERR('three-globe failed to load (CDN blocked?)'); }
   const Globe = new ThreeGlobe()
-    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
-    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+    .globeImageUrl('https://unpkg.com/three-globe@2.30.0/example/img/earth-dark.jpg')
+    .bumpImageUrl('https://unpkg.com/three-globe@2.30.0/example/img/earth-topology.png')
     .showAtmosphere(true)
     .atmosphereColor('#5eead4')
     .atmosphereAltitude(0.18);
 
-  // Points (markers)
-  const points = FELLOWS.map(f => ({
-    lat: f.lat, lng: f.lng, size: 0.85, color: '#22d3ee', fellowId: f.id
-  }));
-  Globe
-    .pointsData(points)
-    .pointAltitude('size')
-    .pointColor('color')
-    .pointRadius(0.85);
-
-  // Hover labels
-  Globe.labelsData(FELLOWS.map(f => ({
-    lat: f.lat, lng: f.lng, text: `${f.name} — ${f.city}`, size: 1.6
-  })))
-  .labelText('text')
-  .labelSize('size')
-  .labelDotRadius(0.4)
-  .labelColor(()=> 'rgba(236,253,245,0.95)')
-  .labelResolution(2);
+  const points = FELLOWS.map(f => ({ lat:f.lat, lng:f.lng, size:0.85, color:'#22d3ee', fellowId:f.id }));
+  Globe.pointsData(points).pointAltitude('size').pointColor('color').pointRadius(0.85);
+  Globe.labelsData(FELLOWS.map(f => ({ lat:f.lat, lng:f.lng, text:`${f.name} — ${f.city}`, size:1.6 })))
+    .labelText('text').labelSize('size').labelDotRadius(0.4).labelColor(()=> 'rgba(236,253,245,0.95)').labelResolution(2);
 
   scene.add(Globe);
 
-  // Gentle rotation
   let autoRotate = true; const SPIN_SPEED = 0.0012;
   const spin = () => { if(autoRotate){ Globe.rotation.y += SPIN_SPEED; } };
 
-  // Raycaster for clicks on point instances
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
+  const raycaster = new THREE.Raycaster(); const mouse = new THREE.Vector2();
   function onClick(e){
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -301,149 +199,35 @@
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(Globe.children, true);
     const hit = intersects.find(i => (i.object && i.object.type === 'InstancedMesh' && typeof i.instanceId === 'number') || (i.object && i.object.userData && i.object.userData.hasOwnProperty('pointId')));
-    if(hit){
-      let idx = typeof hit.instanceId === 'number' ? hit.instanceId : hit.object.userData.pointId;
-      const meta = points[idx];
-      if(meta && meta.fellowId){ openModal(meta.fellowId); }
-    }
+    if(hit){ let idx = typeof hit.instanceId === 'number' ? hit.instanceId : hit.object.userData.pointId; const meta = points[idx]; if(meta && meta.fellowId){ openModal(meta.fellowId); } }
   }
   renderer.domElement.addEventListener('click', onClick);
 
-  // Resize handling
-  function onResize(){
-    const { width:w, height:h } = container.getBoundingClientRect();
-    const W = w || window.innerWidth; const H = h || window.innerHeight;
-    renderer.setSize(W,H);
-    camera.aspect = W/H; camera.updateProjectionMatrix();
-  }
-  window.addEventListener('resize', onResize);
+  function onResize(){ const s = sizeFrom(container); renderer.setSize(s.w, s.h); camera.aspect = s.w/s.h; camera.updateProjectionMatrix(); }
+  window.addEventListener('resize', onResize); window.addEventListener('load', onResize);
 
-  // Animation loop
   (function animate(){ requestAnimationFrame(animate); controls.update(); spin(); renderer.render(scene, camera); })();
 
-  /****************************************
-   * 3) DIRECTORY — search + list + modal  *
-   ****************************************/
-  const listEl = document.getElementById('list');
-  const searchEl = document.getElementById('search');
-  const clearBtn = document.getElementById('clearBtn');
+  // 3) DIRECTORY + MODAL
+  const listEl = document.getElementById('list'); const searchEl = document.getElementById('search'); const clearBtn = document.getElementById('clearBtn');
+  function renderList(items){ listEl.innerHTML=''; items.forEach(f => { const card=document.createElement('div'); card.className='fellow-card'; card.setAttribute('role','button'); card.setAttribute('aria-label',`Open profile for ${f.name}`);
+    const avatar=document.createElement('img'); avatar.className='avatar'; avatar.src=f.photoUrl; avatar.alt=f.name; avatar.referrerPolicy='no-referrer'; avatar.onerror=()=>{avatar.src='https://dummyimage.com/104x104/0a0f24/eef3ff&text=TC'}; card.appendChild(avatar);
+    const col=document.createElement('div'); col.innerHTML=`<div class="title">${f.name}</div><div class="subtitle">${f.city}, ${f.country}</div>`; card.appendChild(col);
+    const badge=document.createElement('div'); badge.className='badge'; badge.textContent=f.tags?.[0]||'Capstone'; card.appendChild(badge);
+    card.addEventListener('click', ()=> openModal(f.id)); listEl.appendChild(card); }); }
+  function filterList(){ const q=(searchEl.value||'').trim().toLowerCase(); const data=!q?FELLOWS: FELLOWS.filter(f => [f.name,f.city,f.country,f.projectTitle,f.projectDescription,...(f.tags||[])].join(' ').toLowerCase().includes(q)); renderList(data); }
+  searchEl.addEventListener('input', filterList); clearBtn.addEventListener('click', ()=>{ searchEl.value=''; filterList(); }); renderList(FELLOWS);
 
-  const searchMatch = (f, q) => [f.name, f.city, f.country, f.projectTitle, f.projectDescription, ...(f.tags||[])]
-      .join(' ').toLowerCase().includes(q);
+  const modal=document.getElementById('modal'); const closeModalBtn=document.getElementById('closeModal'); const mPortrait=document.getElementById('mPortrait'); const mChips=document.getElementById('mChips'); const mTitle=document.getElementById('modalTitle'); const mLoc=document.getElementById('mLocation'); const mProjTitle=document.getElementById('mProjectTitle'); const mProjDesc=document.getElementById('mProjectDesc'); const mLinks=document.getElementById('mLinks'); const mImpact=document.getElementById('mImpact');
+  function openModal(id){ autoRotate=false; const f=FELLOWS.find(x=>x.id===id); if(!f) return; mPortrait.src=f.photoUrl; mPortrait.alt=`${f.name} portrait`; mTitle.textContent=f.name; mLoc.textContent=`${f.city}, ${f.country}`; mProjTitle.textContent=f.projectTitle; mProjDesc.textContent=f.projectDescription; mChips.innerHTML=''; (f.tags||[]).forEach(t=>{ const el=document.createElement('span'); el.className='chip'; el.textContent=t; mChips.appendChild(el); }); mLinks.innerHTML=''; (f.fundraising||[]).forEach(l=>{ const a=document.createElement('a'); a.href=l.url; a.target='_blank'; a.rel='noopener'; a.textContent=l.label; mLinks.appendChild(a); }); mImpact.innerHTML=''; [{label:'Beneficiaries',value:(f.impact?.beneficiaries??'—')},{label:'SDG',value:(f.impact?.sdg?.join(', ')??'—')},{label:'Milestones',value:(f.impact?.milestones?.[0]??'—')}].forEach(c=>{ const k=document.createElement('div'); k.className='card'; k.innerHTML=`<div class="subtitle">${c.label}</div><div class="num">${c.value}</div>`; mImpact.appendChild(k); }); modal.classList.add('open'); }
+  function closeModal(){ modal.classList.remove('open'); autoRotate=true; }
+  closeModalBtn.addEventListener('click', closeModal); modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); }); window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
 
-  function renderList(items){
-    listEl.innerHTML = '';
-    items.forEach(f => {
-      const card = document.createElement('div');
-      card.className = 'fellow-card';
-      card.setAttribute('role','button');
-      card.setAttribute('aria-label', `Open profile for ${f.name}`);
-      const avatar = document.createElement('img');
-      avatar.className = 'avatar';
-      avatar.src = f.photoUrl; avatar.alt = f.name; avatar.referrerPolicy = 'no-referrer';
-      avatar.onerror = () => { avatar.src = 'https://dummyimage.com/104x104/0a0f24/eef3ff&text=TC'; };
-      card.appendChild(avatar);
-
-      const col = document.createElement('div');
-      col.innerHTML = `<div class="title">${f.name}</div><div class="subtitle">${f.city}, ${f.country}</div>`;
-      card.appendChild(col);
-
-      const badge = document.createElement('div');
-      badge.className = 'badge'; badge.textContent = f.tags?.[0] ?? 'Capstone';
-      card.appendChild(badge);
-
-      card.addEventListener('click', ()=> openModal(f.id));
-      listEl.appendChild(card);
-    });
-  }
-
-  function filterList(){
-    const q = searchEl.value.trim().toLowerCase();
-    const data = !q ? FELLOWS : FELLOWS.filter(f => searchMatch(f, q));
-    renderList(data);
-  }
-
-  searchEl.addEventListener('input', filterList);
-  clearBtn.addEventListener('click', ()=>{ searchEl.value=''; filterList(); });
-
-  // Initial render
-  renderList(FELLOWS);
-
-  // Modal controls
-  const modal = document.getElementById('modal');
-  const closeModalBtn = document.getElementById('closeModal');
-  const mPortrait = document.getElementById('mPortrait');
-  const mChips = document.getElementById('mChips');
-  const mTitle = document.getElementById('modalTitle');
-  const mLoc = document.getElementById('mLocation');
-  const mProjTitle = document.getElementById('mProjectTitle');
-  const mProjDesc = document.getElementById('mProjectDesc');
-  const mLinks = document.getElementById('mLinks');
-  const mImpact = document.getElementById('mImpact');
-
-  function openModal(id){
-    autoRotate = false;
-    const f = FELLOWS.find(x => x.id === id);
-    if(!f) return;
-    mPortrait.src = f.photoUrl; mPortrait.alt = `${f.name} portrait`;
-    mTitle.textContent = f.name;
-    mLoc.textContent = `${f.city}, ${f.country}`;
-    mProjTitle.textContent = f.projectTitle;
-    mProjDesc.textContent = f.projectDescription;
-    // tags
-    mChips.innerHTML = '';
-    (f.tags||[]).forEach(t => { const el = document.createElement('span'); el.className='chip'; el.textContent=t; mChips.appendChild(el); });
-    // links
-    mLinks.innerHTML = '';
-    (f.fundraising||[]).forEach(l => { const a = document.createElement('a'); a.href=l.url; a.target='_blank'; a.rel='noopener'; a.textContent=l.label; mLinks.appendChild(a); });
-    // impact
-    mImpact.innerHTML = '';
-    const cards = [
-      { label: 'Beneficiaries', value: (f.impact?.beneficiaries ?? '—') },
-      { label: 'SDG', value: (f.impact?.sdg?.join(', ') ?? '—') },
-      { label: 'Milestones', value: (f.impact?.milestones?.[0] ?? '—') }
-    ];
-    cards.forEach(c => { const k = document.createElement('div'); k.className='card'; k.innerHTML = `<div class=\"subtitle\">${c.label}</div><div class=\"num\">${c.value}</div>`; mImpact.appendChild(k); });
-
-    modal.classList.add('open');
-  }
-  function closeModal(){ modal.classList.remove('open'); autoRotate = true; }
-  closeModalBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
-  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
-
-  /****************************************
-   * 4) OPTIONAL — load data from JSON     *
-   ****************************************/
-  // If you prefer external data, host /data/fellows.json and uncomment below:
-  // fetch('/data/fellows.json').then(r=>r.ok?r.json():[]).then(rows=>{ if(Array.isArray(rows)&&rows.length){
-  //   FELLOWS.length=0; FELLOWS.push(...rows); renderList(FELLOWS);
-  //   Globe.pointsData(rows.map(f=>({lat:f.lat,lng:f.lng,size:0.85,color:'#22d3ee',fellowId:f.id})));
-  //   Globe.labelsData(rows.map(f=>({lat:f.lat,lng:f.lng,text:`${f.name} — ${f.city}`,size:1.6})));
-  // }});
-
-  /****************************************
-   * 5) Self-tests (non-invasive)          *
-   ****************************************/
-  (function runTests(){
-    try{
-      console.assert(typeof THREE !== 'undefined', 'THREE not loaded');
-      console.assert(typeof THREE.OrbitControls === 'function', 'OrbitControls not loaded');
-      console.assert(typeof ThreeGlobe === 'function', 'ThreeGlobe not loaded');
-      console.assert(Array.isArray(FELLOWS) && FELLOWS.length >= 4, 'Seed data missing');
-      console.assert(points.length === FELLOWS.length, 'Points should match fellows length');
-      // Search tests
-      const t1 = FELLOWS.some(f => searchMatch(f, 'dakar'));
-      const t2 = FELLOWS.some(f => searchMatch(f, 'oakland'));
-      const t3 = FELLOWS.every(f => !searchMatch(f, 'stringthatdoesnotexist'));
-      console.assert(t1, 'Search should match Dakar');
-      console.assert(t2, 'Search should match Oakland');
-      console.assert(t3, 'Search should not match gibberish');
-      console.info('%c[Self-tests OK]', 'color:#10b981');
-    }catch(err){
-      console.error('Self-tests failed:', err);
-    }
-  })();
+  // 4) Diagnostics — will surface common GitHub Pages issues
+  window.addEventListener('error', (e)=>{ ERR('Error: ' + (e?.message||'Unknown script error')); });
+  ['https://unpkg.com/three@0.160.0/build/three.min.js','https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js','https://unpkg.com/three-globe@2.30.0/dist/three-globe.min.js'].forEach(u=>{
+    fetch(u, {mode:'no-cors'}).catch(()=>ERR('CDN blocked: ' + u));
+  });
   </script>
 </body>
 </html>
