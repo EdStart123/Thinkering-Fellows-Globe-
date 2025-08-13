@@ -5,55 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thinkering Collective • Fellows Globe</title>
   <meta name="description" content="Interactive globe showcasing Thinkering Collective capstone projects. Click a location to see the fellow, project, fundraising links, and impact." />
-  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0b1020; /* deep space */
-      --bg-2:#0f1530; /* card */
-      --ink:#eef3ff; /* primary text */
-      --muted:#c7d2fe; /* secondary text */
-      --accent:#8b5cf6; /* violet */
-      --accent-2:#22d3ee; /* cyan */
-      --success:#10b981;
-      --danger:#ef4444;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
+      --bg:#0b1020; --bg-2:#0f1530; --ink:#eef3ff; --muted:#c7d2fe;
+      --accent:#8b5cf6; --accent-2:#22d3ee; --shadow:0 10px 30px rgba(0,0,0,.35); --radius:18px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:var(--ink);
+      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink);
       background: radial-gradient(1200px 800px at 10% -10%, #1b255b 0%, transparent 60%),
                   radial-gradient(900px 600px at 90% 10%, #0b3a7e 0%, transparent 55%),
                   var(--bg);
       overflow:hidden;
     }
     .app{ position:fixed; inset:0; display:grid; grid-template-columns: 1fr 380px; gap:18px; padding:18px; }
-    .stage{
-      position:relative; border-radius: var(--radius); box-shadow: var(--shadow);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      overflow:hidden; min-height: 620px; /* ensure non-zero height */
-    }
+    .stage{ position:relative; border-radius:var(--radius); box-shadow:var(--shadow);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); overflow:hidden; min-height:620px; }
     #globe-container{ position:absolute; inset:0; width:100%; height:100%; }
-
-    .panel{ display:flex; flex-direction:column; gap:14px; background: var(--bg-2); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow); min-height:0; }
+    .panel{ display:flex; flex-direction:column; gap:14px; background:var(--bg-2); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); min-height:0; }
     .brand{display:flex; align-items:center; gap:10px}
     .brand img{height:28px; width:auto; filter:drop-shadow(0 4px 12px rgba(0,0,0,.35));}
     .brand h1{font-size:18px; font-weight:700; letter-spacing:.2px; margin:0}
     .muted{color:var(--muted)}
-
     .searchbar{display:flex; gap:8px}
     .searchbar input{ flex:1; padding:12px 14px; border-radius:14px; border:none; outline:none; background:#0c1330; color:var(--ink); font-size:14px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
     .searchbar button{ padding:12px 14px; border-radius:14px; border:none; cursor:pointer; font-weight:600; color:#0b1020; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); }
-
     .legend{display:flex; gap:8px; align-items:center; font-size:12px; color:var(--muted)}
     .legend .dot{width:10px; height:10px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 0 2px rgba(34,211,238,.15)}
-
     .list{overflow:auto; min-height:0; padding-right:6px}
     .fellow-card{ display:grid; grid-template-columns: 52px 1fr auto; gap:12px; align-items:center; padding:10px; border-radius:14px; background:#0b1233; margin-bottom:8px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
     .fellow-card:hover{ outline:1px solid rgba(139,92,246,.35); cursor:pointer; background:#0c163d; }
@@ -62,9 +46,7 @@
     .title{font-size:14px; font-weight:700; margin:0}
     .subtitle{font-size:12px; color:var(--muted); margin:0}
     .badge{font-size:11px; padding:6px 8px; border-radius:999px; background:rgba(34,211,238,.12); color:#7dd3fc; font-weight:700}
-
-    /* Modal */
-    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(5px);} 
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(5px);}
     .modal.open{display:flex}
     .sheet{ width:min(880px, 92vw); background: linear-gradient(180deg, #0a0f24, #0b1020); border-radius: 24px; box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.08); overflow:hidden; display:grid; grid-template-columns: 320px 1fr; position:relative; }
     .sheet .left{background: radial-gradient(900px 600px at 20% -20%, rgba(139,92,246,.25) 0%, transparent 60%); padding:22px;}
@@ -80,13 +62,8 @@
     .impact{display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:14px}
     .impact .card{background:#0c1330; border-radius:14px; padding:12px; border:1px solid rgba(255,255,255,.06)}
     .impact .num{font-size:22px; font-weight:800}
-
     .close{ position:absolute; right:12px; top:10px; background:transparent; border:none; color:var(--muted); font-size:24px; cursor:pointer }
-
-    /* Error banner */
     #err{ position:fixed; left:50%; transform:translateX(-50%); bottom:16px; background:#3b0c0c; color:#fecaca; border:1px solid #fecaca55; padding:10px 12px; border-radius:12px; font-size:12px; display:none; z-index:50 }
-
-    /* Responsive */
     @media (max-width: 980px){ .app{grid-template-columns:1fr; padding:12px} .panel{order:-1} .sheet{grid-template-columns: 1fr} }
   </style>
 </head>
@@ -95,21 +72,18 @@
     <div class="stage">
       <div id="globe-container" aria-label="Interactive globe of Thinkering capstone projects" role="application"></div>
     </div>
-
     <aside class="panel" aria-label="Project directory">
       <div class="brand">
-        <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/globe.svg" alt="Thinkering logo" />
+        <img src="Untitled design - 2025-08-13T134407.997.png" alt="Thinkering logo" />
         <div>
           <h1>Thinkering Fellows Globe</h1>
           <div class="muted" style="font-size:12px">Explore capstones around the world</div>
         </div>
       </div>
-
       <div class="searchbar">
         <input id="search" type="search" placeholder="Search name, city, country, project…" aria-label="Search" />
         <button id="clearBtn" title="Clear">Clear</button>
       </div>
-
       <div class="legend"><span class="dot"></span> Click a marker to open the fellow profile</div>
       <div id="list" class="list" tabindex="0" aria-live="polite"></div>
     </aside>
@@ -135,171 +109,247 @@
 
   <div id="err"></div>
 
-  <!-- Primary CDNs (non-module builds) -->
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://unpkg.com/three-globe@2.30.0/dist/three-globe.min.js"></script>
+  <script>
+    // --- Inline loader to avoid ESM issues on GitHub Pages ---
+    const ERR = (msg) => { const el = document.getElementById('err'); el.textContent = msg; el.style.display='block'; console.error(msg); };
+    function loadScript(u){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=u; s.async=false; s.onload=()=>res(u); s.onerror=()=>rej(new Error('Failed to load: '+u)); document.head.appendChild(s); }); }
+    async function loadLibs(){
+      const cdn = {
+        three: ['https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js','https://unpkg.com/three@0.160.0/build/three.min.js'],
+        orbit: ['https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js','https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js'],
+        globe: ['https://cdn.jsdelivr.net/npm/three-globe@2.30.0/dist/three-globe.min.js','https://unpkg.com/three-globe@2.30.0/dist/three-globe.min.js']
+      };
+      let ok=false; for (const u of cdn.three){ try{ await loadScript(u); ok=true; break; }catch(e){ console.warn(e.message); } } if(!ok) throw new Error('three.js failed to load');
+      ok=false; for (const u of cdn.orbit){ try{ await loadScript(u); ok=true; break; }catch(e){ console.warn(e.message); } } if(!ok) console.warn('OrbitControls unavailable — fallback controls enabled.');
+      ok=false; for (const u of cdn.globe){ try{ await loadScript(u); ok=true; break; }catch(e){ console.warn(e.message); } } if(!ok) throw new Error('three-globe failed to load');
+    }
+  </script>
 
   <script>
-  const ERR = (msg) => { const el = document.getElementById('err'); el.textContent = msg; el.style.display='block'; console.error(msg); };
-  try { const canvas = document.createElement('canvas'); const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl'); if(!gl){ throw new Error('WebGL is not available in this browser.'); } } catch(e){ ERR('WebGL unavailable: ' + e.message); }
+    // ====== Full App ======
+    (async function(){
+      // WebGL capability check
+      try{
+        const c=document.createElement('canvas'); const gl=c.getContext('webgl')||c.getContext('experimental-webgl');
+        if(!gl) return ERR('WebGL unavailable in this browser.');
+      }catch(e){ return ERR('WebGL init error: '+e.message); }
 
-  // Textures
-  const TEX_GLOBE = 'https://unpkg.com/three-globe@2.30.0/example/img/earth-dark.jpg';
-  const TEX_BUMP  = 'https://unpkg.com/three-globe@2.30.0/example/img/earth-topology.png';
+      try{
+        await loadLibs();
+        if(!window.THREE || !window.ThreeGlobe) throw new Error('Core libs missing after load');
 
-  // === REAL CAPSTONE PROJECTS (from Spring 2025 report) ===
-  // NOTE: City approximations are provided for state/region listings so markers render; update as desired.
-  const FELLOWS = [
-    { id:'cap-001', name:'Future Worlds', city:'Denver', country:'USA', lat:39.7392, lng:-104.9903, photoUrl:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop', projectTitle:'Future Worlds', projectDescription:'Student-driven project exploring “What kind of world do you want to help create?” across five focus areas.', tags:['Colorado','Theme Project','Student Voice'], fundraising:[{label:'Learn More', url:'#'}], impact:{beneficiaries:'—', sdg:['4'], milestones:['Focus areas defined']} },
-    { id:'cap-002', name:'STEM Safari Express', city:'Abeokuta', country:'Nigeria', lat:7.1475, lng:3.3619, photoUrl:'https://images.unsplash.com/photo-1614851099138-1f6a1b0eee5b?q=80&w=800&auto=format&fit=crop', projectTitle:'STEM Safari Express', projectDescription:'Mobile STEM Lab bringing hands-on STEM to rural communities with a focus on girls.', tags:['STEM','Mobile Lab'], fundraising:[{label:'Support', url:'#'}], impact:{beneficiaries:'—', sdg:['4','5'], milestones:['Lab design underway']} },
-    { id:'cap-003', name:'Phones in Focus', city:'New York', country:'USA', lat:40.7128, lng:-74.0060, photoUrl:'https://images.unsplash.com/photo-1518281420975-50db6e5d0f8b?q=80&w=800&auto=format&fit=crop', projectTitle:'Phones in Focus', projectDescription:'Exploring student-owned devices as creative learning tools through surveys and experiments.', tags:['Student Voice','EdTech'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4'], milestones:['Pilot in progress']} },
-    { id:'cap-004', name:'The Turtle Coloring Book', city:'Ottawa', country:'Canada', lat:45.4215, lng:-75.6972, photoUrl:'https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=80&w=800&auto=format&fit=crop', projectTitle:'The Turtle Coloring Book', projectDescription:'Student-illustrated coloring book highlighting turtles’ cultural significance with Indigenous partners.', tags:['Indigenous','Early Childhood','Art'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4','15'], milestones:['Draft illustrations']} },
-    { id:'cap-005', name:'Indigenous Knowledge Sharing', city:'Helena', country:'USA', lat:46.5884, lng:-112.0245, photoUrl:'https://images.unsplash.com/photo-1601582585289-9f47b5aa7f4b?q=80&w=800&auto=format&fit=crop', projectTitle:'Indigenous Knowledge Sharing (AR/VR)', projectDescription:'Immersive AR/VR experience with local Tribal knowledge keeper using 360° video and interaction.', tags:['AR/VR','Indigenous'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4','10'], milestones:['Prototype planning']} },
-    { id:'cap-006', name:'Middle School Garden Club', city:'Denver', country:'USA', lat:39.7392, lng:-104.9903, photoUrl:'https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?q=80&w=800&auto=format&fit=crop', projectTitle:'Middle School Garden Club', projectDescription:'Students grow fresh produce; aims to partner with DUG for Youth Farmer’s Market & garden-to-cafeteria.', tags:['Food Access','Sustainability'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['2','4','11'], milestones:['Beds prepped']} },
-    { id:'cap-007', name:'Playing With Purpose', city:'Reston', country:'USA', lat:38.9586, lng:-77.3570, photoUrl:'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop', projectTitle:'Playing With Purpose', projectDescription:'Community-sourced ideas for purposeful play that builds life skills in early learners.', tags:['Early Childhood','Play'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['3','4'], milestones:['Idea bank started']} },
-    { id:'cap-008', name:'Portraits in Action', city:'Lexington', country:'USA', lat:38.0406, lng:-84.5037, photoUrl:'https://images.unsplash.com/photo-1523246198667-8eb0ef97e0f3?q=80&w=800&auto=format&fit=crop', projectTitle:'Portraits in Action', projectDescription:'Scaling student-led documentation of real-world learning; engage alumni as mentors.', tags:['Career Connections','Storytelling'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4','8'], milestones:['Partner outreach']} }
-  ];
+        const TEX_GLOBE='https://cdn.jsdelivr.net/npm/three-globe@2.30.0/example/img/earth-dark.jpg';
+        const TEX_BUMP ='https://cdn.jsdelivr.net/npm/three-globe@2.30.0/example/img/earth-topology.png';
 
-  // Bootstrap
-  (function boot(){
-    const container = document.getElementById('globe-container');
-    const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    const rect = container.getBoundingClientRect();
-    const W = Math.max(1, rect.width || container.clientWidth || window.innerWidth);
-    const H = Math.max(1, rect.height || container.clientHeight || (window.innerHeight - 120));
-    renderer.setSize(W,H);
-    container.appendChild(renderer.domElement);
+        // === Capstone data (can be replaced with your live sheet later) ===
+        const FELLOWS = [
+          { id:'cap-001', name:'Future Worlds', city:'Denver', country:'USA', lat:39.7392, lng:-104.9903, photoUrl:'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=800&auto=format&fit=crop', projectTitle:'Future Worlds', projectDescription:'Student-driven project exploring “What kind of world do you want to help create?” across five focus areas.', tags:['Colorado','Theme Project','Student Voice'], fundraising:[{label:'Learn More', url:'#'}], impact:{beneficiaries:'—', sdg:['4'], milestones:['Focus areas defined']} },
+          { id:'cap-002', name:'STEM Safari Express', city:'Abeokuta', country:'Nigeria', lat:7.1475, lng:3.3619, photoUrl:'https://images.unsplash.com/photo-1614851099138-1f6a1b0eee5b?q=80&w=800&auto=format&fit=crop', projectTitle:'STEM Safari Express', projectDescription:'Mobile STEM Lab bringing hands-on STEM to rural communities with a focus on girls.', tags:['STEM','Mobile Lab'], fundraising:[{label:'Support', url:'#'}], impact:{beneficiaries:'—', sdg:['4','5'], milestones:['Lab design underway']} },
+          { id:'cap-003', name:'Phones in Focus', city:'New York', country:'USA', lat:40.7128, lng:-74.0060, photoUrl:'https://images.unsplash.com/photo-1518281420975-50db6e5d0f8b?q=80&w=800&auto=format&fit=crop', projectTitle:'Phones in Focus', projectDescription:'Exploring student-owned devices as creative learning tools through surveys and experiments.', tags:['Student Voice','EdTech'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4'], milestones:['Pilot in progress']} },
+          { id:'cap-004', name:'The Turtle Coloring Book', city:'Ottawa', country:'Canada', lat:45.4215, lng:-75.6972, photoUrl:'https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=80&w=800&auto=format&fit=crop', projectTitle:'The Turtle Coloring Book', projectDescription:'Student-illustrated coloring book highlighting turtles’ cultural significance with Indigenous partners.', tags:['Indigenous','Early Childhood','Art'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4','15'], milestones:['Draft illustrations']} },
+          { id:'cap-005', name:'Indigenous Knowledge Sharing', city:'Helena', country:'USA', lat:46.5884, lng:-112.0245, photoUrl:'https://images.unsplash.com/photo-1601582585289-9f47b5aa7f4b?q=80&w=800&auto=format&fit=crop', projectTitle:'Indigenous Knowledge Sharing (AR/VR)', projectDescription:'Immersive AR/VR experience with local Tribal knowledge keeper using 360° video and interaction.', tags:['AR/VR','Indigenous'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4','10'], milestones:['Prototype planning']} },
+          { id:'cap-006', name:'Middle School Garden Club', city:'Denver', country:'USA', lat:39.7392, lng:-104.9903, photoUrl:'https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?q=80&w=800&auto=format&fit=crop', projectTitle:'Middle School Garden Club', projectDescription:'Students grow fresh produce; aims to partner with DUG for Youth Farmer’s Market & garden-to-cafeteria.', tags:['Food Access','Sustainability'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['2','4','11'], milestones:['Beds prepped']} },
+          { id:'cap-007', name:'Playing With Purpose', city:'Reston', country:'USA', lat:38.9586, lng:-77.3570, photoUrl:'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop', projectTitle:'Playing With Purpose', projectDescription:'Community-sourced ideas for purposeful play that builds life skills in early learners.', tags:['Early Childhood','Play'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['3','4'], milestones:['Idea bank started']} },
+          { id:'cap-008', name:'Portraits in Action', city:'Lexington', country:'USA', lat:38.0406, lng:-84.5037, photoUrl:'https://images.unsplash.com/photo-1523246198667-8eb0ef97e0f3?q=80&w=800&auto=format&fit=crop', projectTitle:'Portraits in Action', projectDescription:'Scaling student-led documentation of real-world learning; engage alumni as mentors.', tags:['Career Connections','Storytelling'], fundraising:[{label:'Overview', url:'#'}], impact:{beneficiaries:'—', sdg:['4','8'], milestones:['Partner outreach']} }
+        ];
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, W/H, 0.1, 2000);
-    camera.position.set(0, 0, 420);
+        // ===== Three.js bootstrap =====
+        const container = document.getElementById('globe-container');
+        const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+        const rect = container.getBoundingClientRect();
+        const W = Math.max(1, rect.width || container.clientWidth || window.innerWidth);
+        const H = Math.max(1, rect.height || container.clientHeight || (window.innerHeight - 120));
+        renderer.setSize(W,H);
+        container.appendChild(renderer.domElement);
 
-    let controls;
-    if(THREE.OrbitControls){
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 180; controls.maxDistance = 650;
-    } else {
-      const state = { down:false, x:0, y:0 };
-      renderer.domElement.addEventListener('pointerdown', e=>{ state.down=true; state.x=e.clientX; state.y=e.clientY; });
-      window.addEventListener('pointerup', ()=> state.down=false);
-      window.addEventListener('pointermove', e=>{ if(!state.down) return; const dx=e.clientX-state.x; const dy=e.clientY-state.y; state.x=e.clientX; state.y=e.clientY; Globe.rotation.y += dx*0.003; Globe.rotation.x += dy*0.003; });
-      renderer.domElement.addEventListener('wheel', e=>{ e.preventDefault(); const dz = Math.sign(e.deltaY)*10; const z = THREE.MathUtils.clamp(camera.position.z + dz, 180, 650); camera.position.setLength(z); }, {passive:false});
-      controls = { update(){/* noop */} };
-    }
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, W/H, 0.1, 2000);
+        camera.position.set(0, 0, 420);
 
-    // Lights
-    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.9); dirLight.position.set(-60, 80, 80); scene.add(dirLight);
+        // Controls (OrbitControls if available, else fallback)
+        let controls;
+        if (THREE.OrbitControls) {
+          controls = new THREE.OrbitControls(camera, renderer.domElement);
+          controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 180; controls.maxDistance = 650;
+        } else {
+          const state={down:false,x:0,y:0};
+          renderer.domElement.addEventListener('pointerdown', e=>{ state.down=true; state.x=e.clientX; state.y=e.clientY; });
+          window.addEventListener('pointerup', ()=> state.down=false);
+          window.addEventListener('pointermove', e=>{ if(!state.down) return; const dx=e.clientX-state.x; const dy=e.clientY-state.y; state.x=e.clientX; state.y=e.clientY; Globe.rotation.y += dx*0.003; Globe.rotation.x += dy*0.003; });
+          renderer.domElement.addEventListener('wheel', e=>{ e.preventDefault(); const dz=Math.sign(e.deltaY)*10; const z=THREE.MathUtils.clamp(camera.position.z+dz,180,650); camera.position.setLength(z); }, {passive:false});
+          controls={update(){}};
+        }
 
-    // Globe
-    const Globe = new ThreeGlobe()
-      .globeImageUrl(TEX_GLOBE)
-      .bumpImageUrl(TEX_BUMP)
-      .showAtmosphere(true)
-      .atmosphereColor('#5eead4')
-      .atmosphereAltitude(0.18);
+        // Lights
+        scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.9); dirLight.position.set(-60, 80, 80); scene.add(dirLight);
 
-    const points = FELLOWS.map(f => ({ lat:f.lat, lng:f.lng, size:0.85, color:'#22d3ee', fellowId:f.id }));
-    Globe.pointsData(points).pointAltitude('size').pointColor('color').pointRadius(0.85);
-    Globe.labelsData(FELLOWS.map(f => ({ lat:f.lat, lng:f.lng, text:`${f.name} — ${f.city}`, size:1.6 })))
-      .labelText('text').labelSize('size').labelDotRadius(0.4).labelColor(()=> 'rgba(236,253,245,0.95)').labelResolution(2);
+        // Globe
+        const Globe = new ThreeGlobe()
+          .globeImageUrl(TEX_GLOBE)
+          .bumpImageUrl(TEX_BUMP)
+          .showAtmosphere(true)
+          .atmosphereColor('#5eead4')
+          .atmosphereAltitude(0.18);
 
-    scene.add(Globe);
+        // Points and labels
+        const points = FELLOWS.map(f => ({ lat:f.lat, lng:f.lng, size:0.9, color:'#22d3ee', fellowId:f.id }));
+        Globe.pointsData(points).pointAltitude('size').pointColor('color').pointRadius(0.9);
+        Globe.labelsData(FELLOWS.map(f => ({ lat:f.lat, lng:f.lng, text:`${f.name} — ${f.city}`, size:1.6 })))
+          .labelText('text').labelSize('size').labelDotRadius(0.4).labelColor(()=> 'rgba(236,253,245,0.95)').labelResolution(2);
+        scene.add(Globe);
 
-    // Rods (3D cylinders) to highlight fellows
-    const rodsGroup = new THREE.Group();
-    scene.add(rodsGroup);
+        // Rods
+        const rodsGroup = new THREE.Group(); scene.add(rodsGroup);
+        function latLngToVec3(lat,lng,alt=0){
+          const r = (Globe.getGlobeRadius?Globe.getGlobeRadius():100) * (1+alt);
+          const phi=(90-lat)*Math.PI/180, theta=(lng+180)*Math.PI/180;
+          return new THREE.Vector3( -r*Math.sin(phi)*Math.cos(theta), r*Math.cos(phi), r*Math.sin(phi)*Math.sin(theta) );
+        }
+        function buildRods(){
+          rodsGroup.clear();
+          FELLOWS.forEach((f,idx)=>{
+            const start = latLngToVec3(f.lat,f.lng,0);
+            const end   = latLngToVec3(f.lat,f.lng,0.18);
+            const dir = new THREE.Vector3().subVectors(end,start);
+            const len = dir.length();
+            const geom = new THREE.CylinderGeometry(0.6,0.6,len,8,1,true);
+            const mat  = new THREE.MeshBasicMaterial({ color:0x1ec8e8, transparent:true, opacity:0.25 });
+            const rod  = new THREE.Mesh(geom,mat);
+            rod.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.clone().normalize());
+            rod.position.copy(new THREE.Vector3().addVectors(start,end).multiplyScalar(0.5));
+            rod.userData.idx = idx;
+            rodsGroup.add(rod);
+          });
+        }
+        buildRods();
 
-    function latLngToVec3(lat, lng, alt=0){
-      const r = Globe.getGlobeRadius ? Globe.getGlobeRadius() * (1 + alt) : 100 * (1 + alt);
-      const phi = (90 - lat) * Math.PI/180; const theta = (lng + 180) * Math.PI/180;
-      const x = -r * Math.sin(phi) * Math.cos(theta); const z =  r * Math.sin(phi) * Math.sin(theta); const y =  r * Math.cos(phi);
-      return new THREE.Vector3(x,y,z);
-    }
-    function buildRods(){
-      rodsGroup.clear();
-      FELLOWS.forEach((f, idx)=>{
-        const start = latLngToVec3(f.lat, f.lng, 0);
-        const end   = latLngToVec3(f.lat, f.lng, 0.18);
-        const dir = new THREE.Vector3().subVectors(end, start);
-        const len = dir.length();
-        const geom = new THREE.CylinderGeometry(0.6, 0.6, len, 8, 1, true);
-        const mat = new THREE.MeshBasicMaterial({ color: 0x1ec8e8, transparent:true, opacity:0.25 });
-        const rod = new THREE.Mesh(geom, mat);
-        rod.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.clone().normalize());
-        const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
-        rod.position.copy(mid); rod.userData.idx = idx; rodsGroup.add(rod);
-      });
-    }
-    buildRods();
+        // Interaction / focus
+        let autoRotate=true; const SPIN=0.0012; let activeId=null;
+        const spin = () => { if(autoRotate) Globe.rotation.y += SPIN; };
 
-    // Interaction + focus
-    let autoRotate = true; const SPIN_SPEED = 0.0012; let activeId = null;
-    const spin = () => { if(autoRotate){ Globe.rotation.y += SPIN_SPEED; } };
+        function flyTo(lat,lng,alt=1.8,ms=1400){ try{ Globe.pointOfView({lat,lng,altitude:alt}, ms); }catch{} }
+        function clearHighlights(){ document.querySelectorAll('.fellow-card').forEach(n=>n.classList.remove('active')); rodsGroup.children.forEach(m=>m.material.opacity=0.25); }
+        function highlightByIndex(idx){
+          if(idx==null||idx<0) return;
+          clearHighlights();
+          const f=FELLOWS[idx]; if(!f) return;
+          const card=document.querySelector(`[data-fellow-id="${f.id}"]`); if(card){ card.classList.add('active'); card.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+          const rod=rodsGroup.children[idx]; if(rod) rod.material.opacity=0.9;
+        }
+        function setActive(id){
+          activeId=id; const idx=FELLOWS.findIndex(f=>f.id===id);
+          highlightByIndex(idx);
+          const f=FELLOWS[idx]; if(f) flyTo(f.lat,f.lng);
+        }
 
-    function flyTo(lat, lng, alt=1.8, ms=1400){ try{ Globe.pointOfView({lat, lng, altitude: alt}, ms); }catch{} }
+        const raycaster=new THREE.Raycaster(), mouse=new THREE.Vector2();
+        function updateMouse(e){
+          const b=renderer.domElement.getBoundingClientRect();
+          mouse.x=((e.clientX-b.left)/b.width)*2-1; mouse.y=-((e.clientY-b.top)/b.height)*2+1;
+          raycaster.setFromCamera(mouse,camera);
+        }
+        function pick(e, click=false){
+          updateMouse(e);
+          // Intersect points (Globe children) and rods
+          const hitsPoints = raycaster.intersectObjects(Globe.children, true);
+          const hitsRods   = raycaster.intersectObjects(rodsGroup.children, true);
+          let idx = null;
 
-    function setActive(id){
-      activeId = id; const idx = FELLOWS.findIndex(f=>f.id===id); highlightByIndex(idx);
-      const f = FELLOWS[idx]; if(f){ flyTo(f.lat, f.lng); }
-    }
-    function clearHighlights(){
-      document.querySelectorAll('.fellow-card').forEach(n=>n.classList.remove('active'));
-      rodsGroup.children.forEach(m=>{ m.material.opacity = 0.25; });
-    }
-    function highlightByIndex(idx){
-      if(idx==null || idx<0) return; clearHighlights();
-      const f = FELLOWS[idx]; if(!f) return;
-      const card = document.querySelector(`[data-fellow-id="${f.id}"]`); if(card){ card.classList.add('active'); card.scrollIntoView({block:'nearest', behavior:'smooth'}); }
-      const rod = rodsGroup.children[idx]; if(rod){ rod.material.opacity = 0.9; }
-    }
+          // Prefer points hit (instanced mesh)
+          const hitP = hitsPoints.find(i => (i.object && i.object.type==='InstancedMesh' && typeof i.instanceId==='number') || (i.object && i.object.userData && 'pointId' in i.object.userData));
+          if(hitP){
+            idx = typeof hitP.instanceId==='number' ? hitP.instanceId : hitP.object.userData.pointId;
+          } else if(hitsRods.length){ // fallback: rod
+            const ridx = hitsRods[0].object?.userData?.idx;
+            if(typeof ridx==='number') idx = ridx;
+          }
 
-    const raycaster = new THREE.Raycaster(); const mouse = new THREE.Vector2();
-    function onClick(e){
-      const b = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((e.clientX - b.left) / b.width) * 2 - 1; mouse.y = -((e.clientY - b.top) / b.height) * 2 + 1;
-      raycaster.setFromCamera(mouse, camera);
-      const hits = raycaster.intersectObjects(Globe.children, true);
-      const hit = hits.find(i => (i.object && i.object.type === 'InstancedMesh' && typeof i.instanceId === 'number') || (i.object && i.object.userData && i.object.userData.hasOwnProperty('pointId')));
-      if(hit){ const idx = typeof hit.instanceId === 'number' ? hit.instanceId : hit.object.userData.pointId; const meta = points[idx]; if(meta && meta.fellowId){ setActive(meta.fellowId); openModal(meta.fellowId); } }
-    }
-    renderer.domElement.addEventListener('click', onClick);
+          if(idx!=null){
+            document.body.style.cursor='pointer';
+            if(click){
+              const meta = points[idx];
+              if(meta && meta.fellowId){ setActive(meta.fellowId); openModal(meta.fellowId); }
+            }else{
+              if(activeId===null) highlightByIndex(idx);
+            }
+          }else{
+            document.body.style.cursor='default';
+            if(activeId===null) clearHighlights();
+          }
+        }
 
-    function onResize(){ const r = container.getBoundingClientRect(); const w = Math.max(1, r.width || window.innerWidth); const h = Math.max(1, r.height || window.innerHeight); renderer.setSize(w,h); camera.aspect = w/h; camera.updateProjectionMatrix(); }
-    window.addEventListener('resize', onResize);
+        renderer.domElement.addEventListener('pointermove', e=>pick(e,false));
+        renderer.domElement.addEventListener('click', e=>pick(e,true));
 
-    (function animate(){ requestAnimationFrame(animate); controls.update(); spin(); renderer.render(scene, camera); })();
+        function onResize(){
+          const r=container.getBoundingClientRect(); const w=Math.max(1,r.width||window.innerWidth); const h=Math.max(1,r.height||window.innerHeight);
+          renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
+        }
+        window.addEventListener('resize', onResize);
 
-    // Directory + Modal
-    const listEl = document.getElementById('list'); const searchEl = document.getElementById('search'); const clearBtn = document.getElementById('clearBtn');
-    function renderList(items){ listEl.innerHTML=''; items.forEach(f => { const card=document.createElement('div'); card.className='fellow-card'; card.setAttribute('role','button'); card.setAttribute('aria-label',`Open profile for ${f.name}`); card.dataset.fellowId = f.id;
-      const avatar=document.createElement('img'); avatar.className='avatar'; avatar.src=f.photoUrl; avatar.alt=f.name; avatar.referrerPolicy='no-referrer'; avatar.onerror=()=>{avatar.src='https://dummyimage.com/104x104/0a0f24/eef3ff&text=TC'}; card.appendChild(avatar);
-      const col=document.createElement('div'); col.innerHTML=`<div class=\"title\">${f.name}</div><div class=\"subtitle\">${f.city}, ${f.country}</div>`; card.appendChild(col);
-      const badge=document.createElement('div'); badge.className='badge'; badge.textContent=f.tags?.[0]||'Capstone'; card.appendChild(badge);
-      card.addEventListener('click', ()=> { setActive(f.id); openModal(f.id); }); listEl.appendChild(card); }); }
-    function filterList(){ const q=(searchEl.value||'').trim().toLowerCase(); const data=!q?FELLOWS: FELLOWS.filter(f => [f.name,f.city,f.country,f.projectTitle,f.projectDescription,...(f.tags||[])].join(' ').toLowerCase().includes(q)); renderList(data); }
-    searchEl.addEventListener('input', filterList); clearBtn.addEventListener('click', ()=>{ searchEl.value=''; filterList(); }); renderList(FELLOWS);
+        (function animate(){ requestAnimationFrame(animate); controls.update(); spin(); renderer.render(scene,camera); })();
 
-    const modal=document.getElementById('modal'); const closeModalBtn=document.getElementById('closeModal'); const mPortrait=document.getElementById('mPortrait'); const mChips=document.getElementById('mChips'); const mTitle=document.getElementById('modalTitle'); const mLoc=document.getElementById('mLocation'); const mProjTitle=document.getElementById('mProjectTitle'); const mProjDesc=document.getElementById('mProjectDesc'); const mLinks=document.getElementById('mLinks'); const mImpact=document.getElementById('mImpact');
-    function openModal(id){ autoRotate=false; const f=FELLOWS.find(x=>x.id===id); if(!f) return; mPortrait.src=f.photoUrl; mPortrait.alt=`${f.name} portrait`; mTitle.textContent=f.name; mLoc.textContent=`${f.city}, ${f.country}`; mProjTitle.textContent=f.projectTitle; mProjDesc.textContent=f.projectDescription; mChips.innerHTML=''; (f.tags||[]).forEach(t=>{ const el=document.createElement('span'); el.className='chip'; el.textContent=t; mChips.appendChild(el); }); mLinks.innerHTML=''; (f.fundraising||[]).forEach(l=>{ const a=document.createElement('a'); a.href=l.url; a.target='_blank'; a.rel='noopener'; a.textContent=l.label; mLinks.appendChild(a); }); mImpact.innerHTML=''; [{label:'Beneficiaries',value:(f.impact?.beneficiaries??'—')},{label:'SDG',value:(f.impact?.sdg?.join(', ')??'—')},{label:'Milestones',value:(f.impact?.milestones?.[0]??'—')}].forEach(c=>{ const k=document.createElement('div'); k.className='card'; k.innerHTML=`<div class=\"subtitle\">${c.label}</div><div class=\"num\">${c.value}</div>`; mImpact.appendChild(k); }); modal.classList.add('open'); }
-    function closeModal(){ modal.classList.remove('open'); autoRotate=true; }
-    closeModalBtn.addEventListener('click', closeModal); modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); }); window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+        // ===== Right panel list + modal =====
+        const listEl=document.getElementById('list'), searchEl=document.getElementById('search'), clearBtn=document.getElementById('clearBtn');
+        function renderList(items){
+          listEl.innerHTML='';
+          items.forEach(f=>{
+            const card=document.createElement('div'); card.className='fellow-card'; card.setAttribute('role','button'); card.dataset.fellowId=f.id;
+            const avatar=document.createElement('img'); avatar.className='avatar'; avatar.src=f.photoUrl; avatar.alt=f.name; avatar.referrerPolicy='no-referrer';
+            avatar.onerror=()=>{avatar.src='https://dummyimage.com/104x104/0a0f24/eef3ff&text=TC'}; card.appendChild(avatar);
+            const col=document.createElement('div'); col.innerHTML=`<div class="title">${f.name}</div><div class="subtitle">${f.city}, ${f.country}</div>`; card.appendChild(col);
+            const badge=document.createElement('div'); badge.className='badge'; badge.textContent=f.tags?.[0]||'Capstone'; card.appendChild(badge);
+            card.addEventListener('click', ()=>{ setActive(f.id); openModal(f.id); });
+            listEl.appendChild(card);
+          });
+        }
+        function filterList(){
+          const q=(searchEl.value||'').trim().toLowerCase();
+          const data=!q?FELLOWS: FELLOWS.filter(f => [f.name,f.city,f.country,f.projectTitle,f.projectDescription,...(f.tags||[])].join(' ').toLowerCase().includes(q));
+          renderList(data);
+        }
+        searchEl.addEventListener('input', filterList); clearBtn.addEventListener('click', ()=>{searchEl.value=''; filterList();}); renderList(FELLOWS);
 
-    // Self-tests
-    try{
-      console.assert(Array.isArray(FELLOWS) && FELLOWS.length === 8, 'Expect 8 spotlight capstones loaded');
-      const names = FELLOWS.map(f=>f.name);
-      console.assert(names.includes('Future Worlds'), 'Missing Future Worlds');
-      console.assert(names.includes('STEM Safari Express'), 'Missing STEM Safari Express');
-      console.assert(names.includes('Phones in Focus'), 'Missing Phones in Focus');
-      console.assert(names.includes('Portraits in Action'), 'Missing Portraits in Action');
-      console.info('[Thinkering Globe] Ready — markers:', FELLOWS.length);
-    }catch(err){ console.warn('Self-tests failed', err); }
-  })();
+        // Modal
+        const modal=document.getElementById('modal'), closeModalBtn=document.getElementById('closeModal');
+        const mPortrait=document.getElementById('mPortrait'), mChips=document.getElementById('mChips'), mTitle=document.getElementById('modalTitle');
+        const mLoc=document.getElementById('mLocation'), mProjTitle=document.getElementById('mProjectTitle'), mProjDesc=document.getElementById('mProjectDesc');
+        const mLinks=document.getElementById('mLinks'), mImpact=document.getElementById('mImpact');
 
-  window.addEventListener('error', (e)=>{ ERR('Error: ' + (e?.message||'Unknown script error')); });
+        function openModal(id){
+          autoRotate=false;
+          const f=FELLOWS.find(x=>x.id===id); if(!f) return;
+          mPortrait.src=f.photoUrl; mPortrait.alt=`${f.name} portrait`;
+          mTitle.textContent=f.name; mLoc.textContent=`${f.city}, ${f.country}`;
+          mProjTitle.textContent=f.projectTitle; mProjDesc.textContent=f.projectDescription;
+          mChips.innerHTML=''; (f.tags||[]).forEach(t=>{ const el=document.createElement('span'); el.className='chip'; el.textContent=t; mChips.appendChild(el); });
+          mLinks.innerHTML=''; (f.fundraising||[]).forEach(l=>{ const a=document.createElement('a'); a.href=l.url; a.target='_blank'; a.rel='noopener'; a.textContent=l.label; mLinks.appendChild(a); });
+          mImpact.innerHTML=''; [{label:'Beneficiaries',value:(f.impact?.beneficiaries??'—')},{label:'SDG',value:(f.impact?.sdg?.join(', ')??'—')},{label:'Milestones',value:(f.impact?.milestones?.[0]??'—')}].forEach(c=>{
+            const k=document.createElement('div'); k.className='card'; k.innerHTML=`<div class="subtitle">${c.label}</div><div class="num">${c.value}</div>`; mImpact.appendChild(k);
+          });
+          modal.classList.add('open');
+        }
+        function closeModal(){ modal.classList.remove('open'); autoRotate=true; }
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+        window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+
+        // Simple self-tests (console)
+        try{
+          console.assert(Array.isArray(FELLOWS)&&FELLOWS.length===8,'Expect 8 capstones loaded');
+          console.assert(typeof ThreeGlobe==='function','ThreeGlobe available');
+          console.info('[Thinkering Globe] Ready — markers:', FELLOWS.length);
+        }catch(err){ console.warn('Self-tests failed', err); }
+
+      }catch(e){
+        ERR('Error: '+e.message);
+      }
+    })();
+
+    // Surface unknown errors
+    window.addEventListener('error', (e)=>{ if(!String(e.message||'').includes('ResizeObserver')) ERR('Error: '+(e?.message||'Unknown script error')); });
   </script>
 </body>
 </html>
